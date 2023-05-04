@@ -2,8 +2,17 @@ def common_reference_details_inputs():
     author_name = input('Author Name: ')
     title = input('Title: ')
     date_published = input('Date Published (yyyy): ')
-    date_accessed = input('Date Accessed (dd/mm/yyyy): ')
-    URL = input('URL: ')
+    date_accessed = 'viewed ' + input('Date Accessed (dd/mm/yyyy): ')
+    URL = "<" + input('URL: ') + ">"
+
+    # cases where user does not input anything
+    if len(date_accessed) == 7:
+        date_accessed = ''
+    if URL in '<>':
+        URL = ''
+    # rearrange author's name to list surname first then initail
+    mod_author_name = author_name.split(' ')
+    author_name= f'{mod_author_name[1]}, {mod_author_name[0][:1]}. '
 
     return author_name, title, date_published, date_accessed, URL
 
@@ -15,15 +24,14 @@ def website_reference_details_inputs():
     return website_name
 
 def book_reference_details_inputs():
-    date_originally_published = input('Date Originally Published: ')
+    chapter_title = input('Chapter Title: ')
     edition = input('Edition: ')
     volume_number = input('Volume Number: ')
     publisher = input('Publisher: ')
     publisher_place = input('Publisher Place: ')
     page_range = input('Page Range: ')
-    ISBN = input('ISBN: ')
 
-    return date_originally_published, edition, volume_number, publisher, publisher_place, page_range, ISBN
+    return chapter_title, edition, volume_number, publisher, publisher_place, page_range
 
 def journal_reference_details_inputs():
     name_of_journal = input('Journal Name: ')
@@ -45,7 +53,7 @@ def video_reference_details_inputs():
 def website_reference_builder(author_name, title, date_published, date_accessed, website_name, URL):
     
     if author_name:
-        author_string = f'{author_name}. '
+        author_string = author_name
     elif website_name:
         author_string = f'{website_name}. '
     else:
@@ -56,4 +64,7 @@ def website_reference_builder(author_name, title, date_published, date_accessed,
     # generate reference citation
 
 
-    return author_string + date_string + f'{title}. [online] Available at: {URL} {date_accessed}\n'
+    return author_string + date_string + f'*{title}*. {website_name} [online] Available at: {URL}, {date_accessed}\n'
+
+def book_reference_builder(author_name, title, date_published, date_accessed, URL, chapter_title, edition, volume_number, publisher, publisher_place, page_range):
+    return f"{author_name} {date_published}, {chapter_title} in *{title}*, {edition}, {volume_number}, {publisher}, {publisher_place}, {page_range}, {date_accessed} {URL}"

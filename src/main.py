@@ -24,8 +24,8 @@ if os.path.isfile('references.txt'):
     if module_to_run in '\delete':
         print("\nThis will delete all the current references. Are you sure?")
         # ask user to type Y to confirm N to cancel 
-        user_confirm = input('\nY/N:\n>>')
-        if user_confirm in 'Y':
+        user_confirm = input('\nY/N:\n>> ').lower()
+        if user_confirm in 'y':
             os.remove("references.txt")
             # os.remove("citations.txt")
             print("\nReferences deleted successfully")

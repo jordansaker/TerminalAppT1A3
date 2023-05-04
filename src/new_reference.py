@@ -1,4 +1,4 @@
-from reference_type import common_reference_details_inputs, website_reference_details_inputs, website_reference_builder
+from reference_type import common_reference_details_inputs, website_reference_details_inputs, website_reference_builder, book_reference_details_inputs, book_reference_builder 
 
 def new_reference(temporary_reference_list):
     # ask for reference type
@@ -9,12 +9,23 @@ def new_reference(temporary_reference_list):
         return reference_type, temporary_reference_list
      
     # first call common details function
-    author_name, title, date_published, date_accessed = common_reference_details_inputs()
+    author_name, title, date_published, date_accessed, URL = common_reference_details_inputs()
+    
     # then call reference type function
-    website_name, URL = website_reference_details_inputs()
-    # call reference building function for reference type
-    reference = website_reference_builder(
-        author_name, title, date_published, date_accessed, website_name, URL)
+    match reference_type:
+        case 'website':
+            website_name = website_reference_details_inputs()
+            # call reference building function for reference type
+            reference = website_reference_builder(author_name, title, date_published, date_accessed, website_name, URL)
+        case 'book':
+            chapter_title, edition, volume_number, publisher, publisher_place, page_range = book_reference_details_inputs()
+
+            reference = book_reference_builder(author_name, title, date_published, date_accessed, URL, chapter_title, edition, volume_number, publisher, publisher_place, page_range)
+        case 'journal':
+            pass
+        case 'video':
+            pass
+
     # insert new reference to temp list, once user types 'add', add to references.txt
     temporary_reference_list.append(reference)
 
