@@ -18,36 +18,41 @@ def common_reference_details_inputs():
 
 
 # Type of Reference Functions ----------------------------------
+# function to cycle through inputs
+def input_reference_detail_loop(input_string):
+    reference_details = []
+    for index, reference_detail in enumerate(input_string):
+        reference_detail = input(input_string[index])
+        reference_details.append(reference_detail)
+    
+    return reference_details
+
+
 def website_reference_details_inputs():
     website_name = input('Website Name: ')
 
     return website_name
 
 def book_reference_details_inputs():
-    chapter_title = input('Chapter Title: ')
-    edition = input('Edition: ')
-    volume_number = input('Volume Number: ')
-    publisher = input('Publisher: ')
-    publisher_place = input('Publisher Place: ')
-    page_range = input('Page Range: ')
+    input_strings = ['Chapter Title: ', 'Edition: ', 'Volume Number: ', 'Publisher: ', 'Publisher Place: ', 'Page Range: ']
 
-    return chapter_title, edition, volume_number, publisher, publisher_place, page_range
+    reference_details = input_reference_detail_loop(input_strings)
+
+    return reference_details[0], reference_details[1], reference_details[2], reference_details[3], reference_details[4], reference_details[5]
 
 def journal_reference_details_inputs():
-    name_of_journal = input('Journal Name: ')
-    volume_number = input('Volume Number: ')
-    issue_number = input('Issue Number: ')
-    page_range = input('Page Range: ')
-    database_name = input('Database Name: ')
-    DOI = input('DOI: ')
-    
-    return name_of_journal, volume_number, issue_number, page_range, database_name, DOI
+    input_strings = ['Journal Name: ', 'Volume Number: ', 'Issue Number: ', 'Page Range: ', 'Database Name: ', 'DOI: ']
+
+    reference_details = input_reference_detail_loop(input_strings)
+
+    return reference_details[0], reference_details[1], reference_details[2], reference_details[3], reference_details[4], reference_details[5]
+
 
 def video_reference_details_inputs():
-    publisher = input('Publisher: ')
-    video_format = input('Format: ')
+    input_strings = ['Publisher: ', 'Format: ']
+    reference_details = input_reference_detail_loop(input_strings)
 
-    return publisher, video_format
+    return reference_details[0], reference_details[1]
 
 # Reference Builder functions   --------------------------------   
 def website_reference_builder(author_name, title, date_published, date_accessed, website_name, URL):
@@ -67,4 +72,7 @@ def website_reference_builder(author_name, title, date_published, date_accessed,
     return author_string + date_string + f'*{title}*. {website_name} [online] Available at: {URL}, {date_accessed}\n'
 
 def book_reference_builder(author_name, title, date_published, date_accessed, URL, chapter_title, edition, volume_number, publisher, publisher_place, page_range):
-    return f"{author_name} {date_published}, {chapter_title} in *{title}*, {edition}, {volume_number}, {publisher}, {publisher_place}, {page_range}, {date_accessed} {URL}"
+    if {chapter_title}:
+        new_chapter_title = {chapter_title} + ' in'
+
+    return f"{author_name} {date_published}. {new_chapter_title} *{title}*, {edition}, {volume_number}, {publisher}, {publisher_place}, {page_range}, {date_accessed} {URL}"
