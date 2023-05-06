@@ -41,11 +41,11 @@ def book_reference_details_inputs():
     return reference_details[0], reference_details[1], reference_details[2], reference_details[3], reference_details[4], reference_details[5]
 
 def journal_reference_details_inputs():
-    input_strings = ['Journal Name: ', 'Volume Number: ', 'Issue Number: ', 'Page Range: ', 'Database Name: ', 'DOI: ']
+    input_strings = ['Journal Name: ', 'Volume Number: ', 'Issue Number: ', 'Page Range: ']
 
     reference_details = input_reference_detail_loop(input_strings)
 
-    return reference_details[0], reference_details[1], reference_details[2], reference_details[3], reference_details[4], reference_details[5]
+    return reference_details[0], reference_details[1], reference_details[2], reference_details[3]
 
 
 def video_reference_details_inputs():
@@ -72,7 +72,18 @@ def website_reference_builder(author_name, title, date_published, date_accessed,
     return author_string + date_string + f'*{title}*. {website_name} [online] Available at: {URL}, {date_accessed}\n'
 
 def book_reference_builder(author_name, title, date_published, date_accessed, URL, chapter_title, edition, volume_number, publisher, publisher_place, page_range):
-    if {chapter_title}:
+    if chapter_title:
         new_chapter_title = {chapter_title} + ' in'
 
     return f"{author_name} {date_published}. {new_chapter_title} *{title}*, {edition}, {volume_number}, {publisher}, {publisher_place}, {page_range}, {date_accessed} {URL}"
+
+def journal_reference_builder(author_name, title, date_published, date_accessed, URL, journal_name, volume_number, issue_number, page_range):
+    
+    return f"{author_name} {date_published}. '{title}', *{journal_name}*, {volume_number}, {issue_number}, {page_range}, {date_accessed}, {URL}"
+
+def video_reference_builder(author_name, title, date_published, date_accessed, URL, publisher, video_format):
+    if URL:
+        new_URL = 'Available at: ' + {URL}
+    else:
+        new_URL = ''
+    return f"{author_name} *{title}* {date_published}. {video_format}, {publisher} {new_URL} {date_accessed}" 
