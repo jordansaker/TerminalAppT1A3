@@ -3,10 +3,13 @@ from reference_type import common_reference_details_inputs, website_reference_de
 def new_reference(temporary_reference_list):
     # ask for reference type
     reference_type = input(
-        "\nType of refereence: (Website, Book, Journal, Video)\n Or type 'add' to add references to reference list.\n>> ").lower()
+        "\nType of refereence: (Website, Book, Journal, Video)\n Or type 'add' to add references to reference list. Type '\quit' to return to main (This won't save any references you've added)\n>> ").lower()
     
     if reference_type in 'add':
         return reference_type, temporary_reference_list
+    elif reference_type in '\quit':
+        reference_type = 'add'
+        return reference_type, []
      
     # first call common details function
     author_name, title, date_published, date_accessed, URL = common_reference_details_inputs()
@@ -22,9 +25,9 @@ def new_reference(temporary_reference_list):
 
             reference = book_reference_builder(author_name, title, date_published, date_accessed, URL, chapter_title, edition, volume_number, publisher, publisher_place, page_range)
         case 'journal':
-            journal_name, volume_number, issue_number, page_range, database_name, DOI = journal_reference_details_inputs()
+            journal_name, volume_number, issue_number, page_range = journal_reference_details_inputs()
 
-            reference = journal_reference_builder(author_name, title, date_published, date_accessed, URL, journal_name, volume_number, issue_number, page_range, database_name, DOI)
+            reference = journal_reference_builder(author_name, title, date_published, date_accessed, URL, journal_name, volume_number, issue_number, page_range)
         case 'video':
             publisher, video_format = video_reference_details_inputs()
 
