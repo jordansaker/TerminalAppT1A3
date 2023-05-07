@@ -1,7 +1,7 @@
-from file_handling import file_handler
 from new_reference import new_reference
+from md_file_search import search_md_for_reference_list_flag
 import os.path
-
+import file_handling
 
 
 # select which modules to run
@@ -40,15 +40,10 @@ else:
 match module_to_run:
 # if handle file, ask user for file name
     case 'insert references':
-        # get the references in references.txt file and place in a list
-
-        # get the markdown file name
-        file_name = input('What is the Markdown file name? \n>> ')
-        file_handler(file_name, '.md', '', 'a+') if '.md' in file_name else file_handler(file_name + '.md', '.md', '', 'a+')
+        # call the file handling function for inserting references
+        file_handling.insert_references()
     case 'insert citations':
-        # get the citations in citations.txt file
-
-        # get the markdown file name
+        # call the file handling function for inserting citations
         pass
 # if not, run the reference module
     case 'new reference':
@@ -59,7 +54,7 @@ match module_to_run:
             end_listing, temporary_reference_list = new_reference(temporary_reference_list)
         # add the references to the reference.txt file
         # call the file handler function and write to file
-        file_handler('references.txt', '.txt', ''.join(temporary_reference_list), 'a+')
+        file_handling.add_new_reference('references.txt', ''.join(temporary_reference_list), 'a+')
     case '\help':
         # print the help documentation by calling the module function
         pass
