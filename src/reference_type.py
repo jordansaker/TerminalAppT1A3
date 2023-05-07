@@ -73,17 +73,19 @@ def website_reference_builder(author_name, title, date_published, date_accessed,
 
 def book_reference_builder(author_name, title, date_published, date_accessed, URL, chapter_title, edition, volume_number, publisher, publisher_place, page_range):
     if chapter_title:
-        new_chapter_title = {chapter_title} + ' in'
+        new_chapter_title = chapter_title + ' in'
+    else:
+        new_chapter_title = ''
 
-    return f"{author_name} {date_published}. {new_chapter_title} *{title}*, {edition}, {volume_number}, {publisher}, {publisher_place}, {page_range}, {date_accessed} {URL}"
+    return f"{author_name} {date_published}. {new_chapter_title} *{title}*, {edition}, {volume_number}, {publisher}, {publisher_place}, {page_range}. {date_accessed} {URL}" + '\n'
 
 def journal_reference_builder(author_name, title, date_published, date_accessed, URL, journal_name, volume_number, issue_number, page_range):
     
-    return f"{author_name} {date_published}. '{title}', *{journal_name}*, {volume_number}, {issue_number}, {page_range}, {date_accessed}, {URL}"
+    return f"{author_name} {date_published}. '{title}', *{journal_name}*, {volume_number}, {issue_number}, {page_range}. {date_accessed}, {URL}" + '\n'
 
 def video_reference_builder(author_name, title, date_published, date_accessed, URL, publisher, video_format):
     if URL:
-        new_URL = 'Available at: ' + {URL}
+        new_URL = 'Available at: ' + URL
     else:
         new_URL = ''
-    return f"{author_name} *{title}* {date_published}. {video_format}, {publisher} {new_URL} {date_accessed}" 
+    return f"{author_name} *{title}* {date_published}. {video_format} {publisher} {new_URL} {date_accessed}" + '\n'
