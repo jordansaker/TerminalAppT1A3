@@ -1,3 +1,5 @@
+import re
+
 def search_md_for_reference_list_flag(md_file, reference_list):
     line_index = 0
     temp_file = []
@@ -10,3 +12,48 @@ def search_md_for_reference_list_flag(md_file, reference_list):
     temp_file[line_index] = ''.join(reference_list) + '\n'
 
     return temp_file
+
+def search_md_for_citation_flags(md_file, citation_list):
+    line_index = 0
+    temp_file = []
+
+    with open(md_file, 'r') as file:
+        # get the length of the citation list to get the potential number of citations in the mark down document
+        line_index = 0
+        temp_file = []
+
+        for index, line in enumerate(file):
+            temp_file.append(line)
+            for citation_index, citation in enumerate(citation_list):
+                if line in '\n':
+                    pass
+                elif f'[{citation_index}]' in line.lower().strip():
+                    line_list = line.strip().split(']')
+                    line_list = ''.join(line_list)
+                    line_list = line_list.strip().split(' ')
+
+                    
+                    for char_index, str in enumerate(line_list):
+                        exp_to_search = re.search(f'\[{citation_index}', str)
+                        exp_to_search_space = re.search(f'\[{citation_index} ', str)
+                        exp_to_search_comma= re.search(f'\[{citation_index},', str)
+                        exp_to_search_any_character= re.search(f'\[{citation_index}.', str)
+                        exp_to_search_newline = re.search(f'\[{citation_index}.\n', str)
+
+                        if exp_to_search_comma:
+                            line_list[char_index] = citation.strip() + ','
+                        elif exp_to_search_any_character:
+                            line_list[char_index] = citation.strip() + '.'
+                        elif exp_to_search_newline:
+                            line_list[char_index] = citation.strip() + '.\n'
+                        elif exp_to_search_space:
+                            line_list[char_index] = citation.strip() + ' '
+                        elif exp_to_search:
+                            line_list[char_index] = citation.strip()
+                    
+                    inserted_citation_line = ' '.join(line_list)
+                    line_index = index
+        
+                    temp_file[line_index] = inserted_citation_line + '\n'
+
+        return temp_file
