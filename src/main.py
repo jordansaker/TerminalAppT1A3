@@ -27,7 +27,7 @@ if os.path.isfile('references.txt'):
         user_confirm = input('\nY/N:\n>> ').lower()
         if user_confirm in 'y':
             os.remove("references.txt")
-            # os.remove("citations.txt")
+            os.remove("citations.txt")
             print("\nReferences deleted successfully")
             print("\nEnter a reference to get started\n")
             module_to_run = 'new reference'
@@ -44,17 +44,19 @@ match module_to_run:
         file_handling.insert_references()
     case 'insert citations':
         # call the file handling function for inserting citations
-        pass
+        file_handling.insert_citations()
 # if not, run the reference module
     case 'new reference':
         temporary_reference_list = []
+        temporary_citation_list = ['']
         end_listing = 0
         # run new reference function until user types add
         while end_listing != 'add':
-            end_listing, temporary_reference_list = new_reference(temporary_reference_list)
-        # add the references to the reference.txt file
-        # call the file handler function and write to file
+            end_listing, temporary_reference_list, temporary_citation_list = new_reference(temporary_reference_list, temporary_citation_list)
+        # add the references to the references.txt and citations.txt files
+            # call the file handler function and write to file
         file_handling.add_new_reference('references.txt', ''.join(temporary_reference_list), 'a+')
+        file_handling.add_new_reference('citations.txt', ''.join(temporary_citation_list), 'a+')
     case '\help':
         # print the help documentation by calling the module function
         pass
