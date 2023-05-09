@@ -11,6 +11,33 @@ def new_reference(temporary_reference_list, temporary_citation_list):
         reference_type = 'add'
         return reference_type, [], []
      
+    reference, citation = inputs_function(reference_type)
+
+    # insert new reference to temp list, once user types 'add', add to references.txt
+    temporary_reference_list.append(reference)
+    # insert citations to temporary citation list
+    temporary_citation_list.append(citation)
+
+    return reference_type, temporary_reference_list, temporary_citation_list
+   
+
+def edit_reference(reference_citation_list, reference_number, reference_or_citation, new_citation):
+    # ask for reference type
+    if reference_or_citation in 'reference':
+        reference_type = input(
+        "\nType of refereence: (Website, Book, Journal, Video)\n Or type 'add' to add references to reference list. Type '\quit' to return to main (This won't save any references you've added)\n>> ").lower()
+    
+        reference, citation = inputs_function(reference_type)
+
+    if reference_or_citation in 'reference':
+        reference_citation_list[reference_number] = reference
+        return reference_citation_list, citation
+    else:
+        reference_citation_list[reference_number + 1] = new_citation
+        return reference_citation_list
+    
+
+def inputs_function(reference_type):
     # first call common details function
     author_name, title, date_published, date_accessed, URL, author_name_citation = common_reference_details_inputs()
     
@@ -33,10 +60,4 @@ def new_reference(temporary_reference_list, temporary_citation_list):
 
             reference, citation = video_reference_builder(author_name, title, date_published, date_accessed, URL, publisher, video_format, author_name_citation)
 
-    # insert new reference to temp list, once user types 'add', add to references.txt
-    temporary_reference_list.append(reference)
-    # insert citations to temporary citation list
-    temporary_citation_list.append(citation)
-
-    return reference_type, temporary_reference_list, temporary_citation_list
-   
+    return reference, citation
