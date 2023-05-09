@@ -43,10 +43,10 @@ while module_to_run != '\quit':
     # if handle file, ask user for file name
         case 'insert references':
             # call the file handling function for inserting references
-            file_handling.insert_references()
+            file_handling.insert_references_citations('references.txt')
         case 'insert citations':
             # call the file handling function for inserting citations
-            file_handling.insert_citations()
+            file_handling.insert_references_citations('citations.txt')
     # if not, run the reference module
         case 'new reference':
             temporary_reference_list = []
@@ -61,6 +61,8 @@ while module_to_run != '\quit':
             file_handling.add_new_reference('citations.txt', ''.join(temporary_citation_list), 'a+')
         case '\help':
             # print the help documentation by calling the module function
+            pass
+        case 'search':
             pass
     print("\nWhat would you like to do? \n\nOptions: 'Insert references', 'Insert citations', 'New Reference'. \nType '\help' to print help document. Type '\quit' to exit. Type '\delete' to delete references list and citations")
     module_to_run = input('\n>> ').lower()
