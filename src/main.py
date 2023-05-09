@@ -36,27 +36,31 @@ else:
     print("\nEnter a reference to get started\n")
     module_to_run = 'new reference'
 
+# main loop which can be exited if user types in quit
 
-match module_to_run:
-# if handle file, ask user for file name
-    case 'insert references':
-        # call the file handling function for inserting references
-        file_handling.insert_references()
-    case 'insert citations':
-        # call the file handling function for inserting citations
-        file_handling.insert_citations()
-# if not, run the reference module
-    case 'new reference':
-        temporary_reference_list = []
-        temporary_citation_list = ['']
-        end_listing = 0
-        # run new reference function until user types add
-        while end_listing != 'add':
-            end_listing, temporary_reference_list, temporary_citation_list = new_reference(temporary_reference_list, temporary_citation_list)
-        # add the references to the references.txt and citations.txt files
-            # call the file handler function and write to file
-        file_handling.add_new_reference('references.txt', ''.join(temporary_reference_list), 'a+')
-        file_handling.add_new_reference('citations.txt', ''.join(temporary_citation_list), 'a+')
-    case '\help':
-        # print the help documentation by calling the module function
-        pass
+while module_to_run != '\quit':
+    match module_to_run:
+    # if handle file, ask user for file name
+        case 'insert references':
+            # call the file handling function for inserting references
+            file_handling.insert_references()
+        case 'insert citations':
+            # call the file handling function for inserting citations
+            file_handling.insert_citations()
+    # if not, run the reference module
+        case 'new reference':
+            temporary_reference_list = []
+            temporary_citation_list = ['']
+            end_listing = 0
+            # run new reference function until user types add
+            while end_listing != 'add':
+                end_listing, temporary_reference_list, temporary_citation_list = new_reference(temporary_reference_list, temporary_citation_list)
+            # add the references to the references.txt and citations.txt files
+                # call the file handler function and write to file
+            file_handling.add_new_reference('references.txt', ''.join(temporary_reference_list), 'a+')
+            file_handling.add_new_reference('citations.txt', ''.join(temporary_citation_list), 'a+')
+        case '\help':
+            # print the help documentation by calling the module function
+            pass
+    print("\nWhat would you like to do? \n\nOptions: 'Insert references', 'Insert citations', 'New Reference'. \nType '\help' to print help document. Type '\quit' to exit. Type '\delete' to delete references list and citations")
+    module_to_run = input('\n>> ').lower()
