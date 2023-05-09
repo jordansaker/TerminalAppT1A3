@@ -1,4 +1,4 @@
-from new_reference import new_reference
+from new_reference import new_reference, edit_reference
 from md_file_search import search_md_for_reference_list_flag
 import os.path
 import file_handling
@@ -17,7 +17,7 @@ print('***** Harvard Referencing for Markdown *****')
 # main loop
 # Check is references.txt exists. If yes, ask user what they want to do
 if os.path.isfile('references.txt'):
-    print("\nWhat would you like to do? \n\nOptions: 'Insert references', 'Insert citations', 'New Reference'. \nType '\help' to print help document. Type '\quit' to exit. Type '\delete' to delete references list and citations")
+    print("\nWhat would you like to do? \n\nOptions: 'Insert references', 'Insert citations', 'New Reference', 'Search'. \nType '\help' to print help document. Type '\quit' to exit. Type '\delete' to delete references list and citations")
     module_to_run = input('\n>> ').lower()
 
     # make sure user understands delete
@@ -43,10 +43,10 @@ while module_to_run != '\quit':
     # if handle file, ask user for file name
         case 'insert references':
             # call the file handling function for inserting references
-            file_handling.insert_references_citations('references.txt')
+            file_handling.insert_references_citations('references.txt', 'read')
         case 'insert citations':
             # call the file handling function for inserting citations
-            file_handling.insert_references_citations('citations.txt')
+            file_handling.insert_references_citations('citations.txt', 'read')
     # if not, run the reference module
         case 'new reference':
             temporary_reference_list = []
@@ -63,6 +63,14 @@ while module_to_run != '\quit':
             # print the help documentation by calling the module function
             pass
         case 'search':
-            pass
-    print("\nWhat would you like to do? \n\nOptions: 'Insert references', 'Insert citations', 'New Reference'. \nType '\help' to print help document. Type '\quit' to exit. Type '\delete' to delete references list and citations")
+            reference_number, reference_list = file_handling.insert_references_citations('references.txt', 'search')
+            citation_list = file_handling.insert_references_citations('citations.txt', 'search')
+
+            updated_reference_list, new_generated_citation = edit_reference(reference_list, reference_number, 'reference','')
+            updated_citation_list = edit_reference(citation_list, reference_number, 'citation', new_generated_citation)
+
+            file_handling.add_new_reference('references.txt', updated_reference_list, 'w')
+            file_handling.add_new_reference('citations.txt', updated_citation_list, 'w')
+
+    print("\nWhat would you like to do? \n\nOptions: 'Insert references', 'Insert citations', 'New Reference', 'Search'. \nType '\help' to print help document. Type '\quit' to exit. Type '\delete' to delete references list and citations")
     module_to_run = input('\n>> ').lower()
