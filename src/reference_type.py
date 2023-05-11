@@ -152,13 +152,17 @@ def book_reference_builder(author_name, title, date_published, date_accessed,
         new_volume_number = 'vol. ' + volume_number
     else:
         new_volume_number = ''
+    if page_range:
+        new_page_range = 'pp. ' + page_range
+    else:
+        new_page_range = ''
 
     # generate citation
     citation = '(' + author_name_citation + date_published + ')\n'
 
     return f"{author_name} {date_published}. {new_chapter_title} \
         *{title}*, {edition}, {new_volume_number}, {publisher}, \
-            {publisher_place}, {page_range}. {date_accessed} {URL}" + '\n', citation
+            {publisher_place}, {new_page_range}. {date_accessed} {URL}" + '\n', citation
 
 def journal_reference_builder(author_name, title, date_published,
                                 date_accessed, URL, journal_name, volume_number, issue_number,
@@ -172,12 +176,16 @@ def journal_reference_builder(author_name, title, date_published,
         new_issue_number = 'vol. ' + issue_number
     else:
         new_issue_number = ''
+    if page_range:
+        new_page_range = 'pp. ' + page_range
+    else:
+        new_page_range = ''
     
     # generate citation
     citation = '(' + author_name_citation + date_published + ')\n'
 
     return f"{author_name} {date_published}. '{title}', \
-          *{journal_name}*, {new_volume_number}, {new_issue_number}, {page_range}. \
+          *{journal_name}*, {new_volume_number}, {new_issue_number}, {new_page_range}. \
               {date_accessed}, {URL}" + '\n', citation
 
 def video_reference_builder(author_name, title, date_published, date_accessed,
