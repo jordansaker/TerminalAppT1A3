@@ -9,12 +9,13 @@ import re
 
 def insert_references_citations(file_type, read_or_search):
     reference_citation_list = []
+    citation_list = []
     try:
         with open(file_type, 'r') as file:
             for index, line in enumerate(file):
                 if file_type in 'references.txt':
                     
-                    exp_to_search = re.search('[0-9]', line)
+                    exp_to_search = re.search('^[0-9].', line)
 
                     if exp_to_search:
                         list_line = line.split(' ')
@@ -23,9 +24,15 @@ def insert_references_citations(file_type, read_or_search):
                     
                     numbered_reference = f'{index + 1}. {line}'
                     reference_citation_list.append(numbered_reference)
+                    
                 else:
-                    reference_citation_list.append(line)
-            add_new_reference('references.txt', reference_citation_list, 'w')
+                    citation_list.append(line)
+                
+            # update the entire list after it has been updated with numbers
+            if file_type in 'references.txt' and reference_citation_list:
+                add_new_reference('references.txt', reference_citation_list, 'w')
+                
+            
             # get the markdown file name
             if read_or_search in 'read':
                 file_name = input(
@@ -38,7 +45,7 @@ def insert_references_citations(file_type, read_or_search):
                     file_name, reference_citation_list)
             elif file_type in 'citations.txt' and read_or_search in 'read':
                 temp_file = search_md_for_citation_flags(
-                    file_name, reference_citation_list)
+                    file_name, citation_list)
 
     except OSError as error:
         print('References List does not exist. Create a list by added a new reference')
@@ -50,14 +57,13 @@ def insert_references_citations(file_type, read_or_search):
         reference_number = reference_search(reference_citation_list)
         return reference_number, reference_citation_list
     if file_type in 'citations.txt' and read_or_search in 'search':
-        return reference_citation_list
+        return citation_list
     # re-write markdown with temp file
     if read_or_search in 'read':
         with open(file_name, 'w') as file:
             file.writelines(temp_file)
     else:
         pass
-
 def add_new_reference(filename, input_text, read_or_write):
     try:
         with open(filename, read_or_write) as file:
