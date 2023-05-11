@@ -28,12 +28,15 @@ def search_md_for_citation_flags(md_file, citation_list):
                 
                 if line in "\n":
                     pass
-                elif f'[{citation_index}]' in line.lower().strip() or f'[{citation_index}' in line.lower().strip():
+                elif f'[{citation_index}]' in line.lower().strip() or \
+                        f'[{citation_index}' in line.lower().strip():
+
                     line_list = line.strip().split(']')
                     line_list = ''.join(line_list)
                     line_list = line_list.strip().split(' ')
                      
                     for char_index, str in enumerate(line_list):
+
                         exp_to_search = re.search(f'\[{citation_index}', str)
                         exp_to_search_multiple_brackets = re.search(f'\[{citation_index}\[[0-9]', str)
                         exp_to_search_space = re.search(f'\[{citation_index} ', str)
@@ -51,6 +54,7 @@ def search_md_for_citation_flags(md_file, citation_list):
                             new_str_list = line_list[char_index].split('[')
                             
                             spaces_between = []
+                            
                             for list_item in new_str_list:
                                 if list_item != '':
                                     list_item = '[' + list_item
