@@ -5,6 +5,7 @@
 from md_file_search import search_md_for_reference_list_flag, search_md_for_citation_flags
 from txt_file_search import reference_search
 import re
+from colorist import Color
 
 
 def insert_references_citations(file_type, read_or_search):
@@ -36,7 +37,7 @@ def insert_references_citations(file_type, read_or_search):
             # get the markdown file name
             if read_or_search in 'read':
                 file_name = input(
-                    "What is the Markdown file name? (Type '\quit' to exit to main menu) \n>> ")
+                    f"What is the Markdown file name? (Type {Color.RED} '\delete' {Color.OFF} to exit to main menu) \n>> ")
                 if file_name in '\quit':
                     return None
             # open the markdown file and store in temp file
@@ -48,7 +49,7 @@ def insert_references_citations(file_type, read_or_search):
                     file_name, citation_list)
 
     except OSError as error:
-        print('References List does not exist. Create a list by added a new reference')
+        print(f'{Color.RED}References List does not exist. Create a list by added a new reference{Color.OFF}')
         print(type(error))
         return type(error)
 
@@ -64,6 +65,7 @@ def insert_references_citations(file_type, read_or_search):
             file.writelines(temp_file)
     else:
         pass
+
 def add_new_reference(filename, input_text, read_or_write):
     try:
         with open(filename, read_or_write) as file:
@@ -74,6 +76,6 @@ def add_new_reference(filename, input_text, read_or_write):
             else:
                 print('Reference fields are empty. Try again.')
     except OSError as error:
-        print('File name not found: %s' % filename)
+        print(f'{Color.RED}File name not found: %s{Color.OFF}' % filename )
         print(type(error))
         return type(error)
