@@ -12,7 +12,7 @@ def new_reference(temporary_reference_list, temporary_citation_list):
     while not reference_type:
         try:
             reference_type = input(
-        f"\nType of reference: (Website, Book, Journal, Video)\n Or type 'add' to add references to reference list. Type {Color.MAGENTA} '\quit' {Color.OFF} to return to main (This won't save any references you've added)\n>> ").lower()
+        f"\nType of reference: {Color.WHITE}(Website, Book, Journal, Video){Color.OFF}\n Or type 'add' to add references to reference list. Type {Color.MAGENTA} '\quit' {Color.OFF} to return to main (This won't save any references you've added)\n>> ").lower()
             
             if reference_type == 'website' or reference_type == 'book' \
                   or reference_type == 'journal' or \
@@ -47,7 +47,7 @@ def edit_reference(reference_citation_list,
     # ask for reference type
     if reference_or_citation in 'reference':
         reference_type = input(
-        f"\nType of refereence: (Website, Book, Journal, Video)\n Or type 'add' to add references to reference list. Type {Color.MAGENTA} '\quit' {Color.OFF} to return to main (This won't save any references you've added)\n>> ").lower()
+        f"\nType of refereence: {Color.WHITE}(Website, Book, Journal, Video){Color.OFF}\n Or type 'add' to add references to reference list. Type {Color.MAGENTA} '\quit' {Color.OFF} to return to main (This won't save any references you've added)\n>> ").lower()
     
         reference, citation = inputs_function(reference_type)
 
