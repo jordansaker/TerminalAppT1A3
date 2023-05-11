@@ -10,9 +10,10 @@ def insert_references_citations(file_type, read_or_search):
     reference_citation_list = []
     try:
         with open(file_type, 'r') as file:
-            for line in file:
+            for index, line in enumerate(file):
                 if file_type in 'references.txt':
-                    reference_citation_list.append(line)
+                    numbered_reference = f'{index + 1}. {line}'
+                    reference_citation_list.append(numbered_reference)
                 else:
                     reference_citation_list.append(line)
 
