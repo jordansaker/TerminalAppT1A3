@@ -16,7 +16,8 @@ def new_reference(temporary_reference_list, temporary_citation_list):
             
             if reference_type == 'website' or reference_type == 'book' \
                   or reference_type == 'journal' or \
-                      reference_type == 'video' or reference_type == 'add':
+                      reference_type == 'video' or reference_type == 'add' \
+                        or reference_type == '\quit':
                 break
             else:
                 reference_type = ''
