@@ -2,6 +2,7 @@ from new_reference import new_reference, edit_reference
 from md_file_search import search_md_for_reference_list_flag
 import os
 import file_handling
+from colorist import green, yellow, red, white, magenta, black, cyan
 
 
 # user-defined exceptions
@@ -30,7 +31,7 @@ if os.path.isfile('references.txt'):
     module_to_run = input('\n>> ').lower()
 
     # make sure user understands delete
-    if module_to_run in '\delete':
+    if module_to_run == '\delete':
         print("\nThis will delete all the current references. Are you sure?")
         # ask user to type Y to confirm N to cancel 
         user_confirm = input('\nY/N:\n>> ').lower()
@@ -79,18 +80,42 @@ while module_to_run != '\quit':
                 # clear the terminal
                 os.system('clear' if os.name == 'posix' else 'cls')
 
+                # return the current reference and citation lists
                 reference_number, reference_list = file_handling.insert_references_citations('references.txt', 'search')
-
-                if reference_number in '\quit':
-                    raise EndCase
-                
                 citation_list = file_handling.insert_references_citations('citations.txt', 'search')
 
-                updated_reference_list, new_generated_citation = edit_reference(reference_list, reference_number, 'reference','')
-                updated_citation_list = edit_reference(citation_list, reference_number, 'citation', new_generated_citation)
+                # if user types quit in reference search
+                if not reference_number.isnumeric(): 
+                    if reference_number == '\quit':
+                        raise EndCase
+                else:
+                    reference_number = int(reference_number)
+                
+                edit = True
 
-                file_handling.add_new_reference('references.txt', updated_reference_list, 'w')
-                file_handling.add_new_reference('citations.txt', updated_citation_list, 'w')
+                while edit:
+
+                    edit_or_delete = input("Would you like to edit or delete this reference? (Type '\delete' or 'edit'. Type '\quit' to exit)\n>> ").lower()
+
+                    if edit_or_delete == '\quit':
+                        break
+                    elif edit_or_delete == '\delete':
+                        # ask user if they are sure
+                        delete_y_n = input('Are you sure? Y/N\n>> ').lower()
+                        if delete_y_n in 'y':
+                            del reference_list[reference_number - 1]
+                            del citation_list[reference_number - 1]
+                            file_handling.add_new_reference('references.txt', reference_list, 'w')
+                            file_handling.add_new_reference('citations.txt', citation_list, 'w')
+                            break
+                    else:
+                        print(f'\nEditing reference {reference_number}')        
+                        updated_reference_list, new_generated_citation = edit_reference(reference_list, reference_number, 'reference','')
+                        updated_citation_list = edit_reference(citation_list, reference_number, 'citation', new_generated_citation)
+
+                        file_handling.add_new_reference('references.txt', updated_reference_list, 'w')
+                        file_handling.add_new_reference('citations.txt', updated_citation_list, 'w')
+                        break
     except EndCase:
         pass
     os.system('clear' if os.name == 'posix' else 'cls')
