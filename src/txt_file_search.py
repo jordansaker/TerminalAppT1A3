@@ -35,11 +35,13 @@ def reference_search(references_list):
                             if re.findall("[*]", string):
                                 break
                             elif string.lower() in exp_to_search:
-                                print(f'\n{reference}')
+                                print(f'\n{Color.WHITE}{reference}{Color.OFF}')
                                 counter += 1
                                 break
+                        break
                     if not counter:
                         raise IndexError
+                    break
 
             except IndexError:
                 print(f"\n{Color.RED}No reference exists{Color.OFF}")
