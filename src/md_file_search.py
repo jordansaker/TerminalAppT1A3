@@ -18,7 +18,8 @@ def search_md_for_citation_flags(md_file, citation_list):
     temp_file = []
 
     with open(md_file, 'r') as file:
-        # get the length of the citation list to get the potential number of citations in the mark down document
+        # get the length of the citation list to get the 
+        # potential number of citations in the mark down document
         line_index = 0
         temp_file = []
 
@@ -42,7 +43,8 @@ def search_md_for_citation_flags(md_file, citation_list):
                     # search each element in the list for the flags in the line 
                     for char_index, str in enumerate(line_list):
 
-                        # possible cases a flag might appear after being split, joined, and then split at spaces
+                        # possible cases a flag might appear after 
+                        # being split, joined, and then split at spaces
                         exp_to_search = re.search(f'\[{citation_index}', str)
                         exp_to_search_multiple_brackets = re.search(f'\[{citation_index}\[[0-9]', str)
                         exp_to_search_space = re.search(f'\[{citation_index} ', str)
@@ -81,7 +83,8 @@ def search_md_for_citation_flags(md_file, citation_list):
                         elif exp_to_search:
                             line_list[char_index] = citation.strip()
 
-                    # the list is join and the string is written to the temp_file
+                    # the list is join and the 
+                    # string is written to the temp_file
                         inserted_citation_line = ' '.join(line_list)
                         line = inserted_citation_line
                     line_index = index
