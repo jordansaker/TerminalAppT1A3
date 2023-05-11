@@ -1,5 +1,10 @@
 from file_handling import add_new_reference
+import re
+import datetime
 
+class IncorrectDateFormat(Exception):
+    "Incorrect date format. Correct date format is dd/mm/yyyy"
+    pass
 
 def common_reference_details_inputs():
     multi_author = input('Multiple Authors? Y/N ').lower()
@@ -21,7 +26,35 @@ def common_reference_details_inputs():
         author_list.append(author_name)
     title = input('Title: ')
     date_published = input('Date Published (yyyy): ')
-    date_accessed = 'viewed ' + input('Date Accessed (dd/mm/yyyy): ')
+
+    date_format = None
+    # create while loop
+    while not date_format:
+        try:
+            date_accessed = 'viewed ' + input('Date Accessed (dd/mm/yyyy): ')
+            day = date_accessed[7:9]
+            month = date_accessed[10:12]
+            year = date_accessed[13:]
+            
+            # check for the correct format dd/mm/yyyy
+            if day.isnumeric() and month.isnumeric() and year.isnumeric():
+                day = int(day)
+                if 0 < day <= 31:
+                    pass
+                else:
+                    print('Day exceeds 31 days in a month. Enter new day')
+            
+                if 0 < month <= 12:
+                    pass
+                else:
+                    print('Month exceeds 12 months month. Enter new month')
+            else:
+                raise IncorrectDateFormat
+
+        except IncorrectDateFormat:
+            print('Incorrect Date format. Correct date format is dd/mm/yyyy')
+
+
     URL = "<" + input('URL: ') + ">"
 
     # cases where user does not input anything
@@ -37,7 +70,8 @@ def common_reference_details_inputs():
         author_name += f'{mod_author_name[-1]}, {mod_author_name[0][:1]}. '
         author_name_citation += f'{mod_author_name[-1]}, '
 
-    return author_name, title, date_published, date_accessed, URL, author_name_citation
+    return (author_name, title, date_published, 
+            date_accessed, URL, author_name_citation)
 
 
 # Type of Reference Functions ----------------------------------
@@ -57,18 +91,22 @@ def website_reference_details_inputs():
     return website_name
 
 def book_reference_details_inputs():
-    input_strings = ['Chapter Title: ', 'Edition: ', 'Volume Number: ', 'Publisher: ', 'Publisher Place: ', 'Page Range: ']
+    input_strings = ['Chapter Title: ', 'Edition: ', 'Volume Number: ',
+                     'Publisher: ', 'Publisher Place: ', 'Page Range: ']
 
     reference_details = input_reference_detail_loop(input_strings)
 
-    return reference_details[0], reference_details[1], reference_details[2], reference_details[3], reference_details[4], reference_details[5]
+    return (reference_details[0], reference_details[1], reference_details[2], 
+                reference_details[3], reference_details[4], reference_details[5])
 
 def journal_reference_details_inputs():
-    input_strings = ['Journal Name: ', 'Volume Number: ', 'Issue Number: ', 'Page Range: ']
+    input_strings = ['Journal Name: ', 'Volume Number: ',
+                    'Issue Number: ', 'Page Range: ']
 
     reference_details = input_reference_detail_loop(input_strings)
 
-    return reference_details[0], reference_details[1], reference_details[2], reference_details[3]
+    return (reference_details[0], reference_details[1], 
+                reference_details[2], reference_details[3])
 
 
 def video_reference_details_inputs():
@@ -78,7 +116,8 @@ def video_reference_details_inputs():
     return reference_details[0], reference_details[1]
 
 # Reference Builder functions   --------------------------------   
-def website_reference_builder(author_name, title, date_published, date_accessed, website_name, URL, author_name_citation):
+def website_reference_builder(author_name, title, date_published, 
+                              date_accessed, website_name, URL, author_name_citation):
     
     if author_name:
         author_string = author_name
@@ -92,9 +131,13 @@ def website_reference_builder(author_name, title, date_published, date_accessed,
     # generate reference citation
     citation = '(' + author_name_citation + date_string_citation + ')\n'
 
-    return author_string + date_string + f'*{title}*. {website_name} [online] Available at: {URL}, {date_accessed}\n', citation
+    return (author_string + date_string + 
+                f'*{title}*. {website_name} [online] Available at: {URL}, {date_accessed}\n',
+                    citation)
 
-def book_reference_builder(author_name, title, date_published, date_accessed, URL, chapter_title, edition, volume_number, publisher, publisher_place, page_range, author_name_citation):
+def book_reference_builder(author_name, title, date_published, date_accessed,
+                            URL, chapter_title, edition, volume_number,
+                              publisher, publisher_place, page_range, author_name_citation):
     if chapter_title:
         new_chapter_title = chapter_title + ' in'
     else:
@@ -102,15 +145,22 @@ def book_reference_builder(author_name, title, date_published, date_accessed, UR
 
     citation = '(' + author_name_citation + date_published + ')\n'
 
-    return f"{author_name} {date_published}. {new_chapter_title} *{title}*, {edition}, {volume_number}, {publisher}, {publisher_place}, {page_range}. {date_accessed} {URL}" + '\n', citation
+    return f"{author_name} {date_published}. {new_chapter_title} \
+        *{title}*, {edition}, {volume_number}, {publisher}, \
+            {publisher_place}, {page_range}. {date_accessed} {URL}" + '\n', citation
 
-def journal_reference_builder(author_name, title, date_published, date_accessed, URL, journal_name, volume_number, issue_number, page_range, author_name_citation):
+def journal_reference_builder(author_name, title, date_published,
+                                date_accessed, URL, journal_name, volume_number, issue_number,
+                                  page_range, author_name_citation):
     
     citation = '(' + author_name_citation + date_published + ')\n'
 
-    return f"{author_name} {date_published}. '{title}', *{journal_name}*, {volume_number}, {issue_number}, {page_range}. {date_accessed}, {URL}" + '\n', citation
+    return f"{author_name} {date_published}. '{title}', \
+          *{journal_name}*, {volume_number}, {issue_number}, {page_range}. \
+              {date_accessed}, {URL}" + '\n', citation
 
-def video_reference_builder(author_name, title, date_published, date_accessed, URL, publisher, video_format, author_name_citation):
+def video_reference_builder(author_name, title, date_published, date_accessed,
+                             URL, publisher, video_format, author_name_citation):
     if URL:
         new_URL = 'Available at: ' + URL
     else:
@@ -118,4 +168,5 @@ def video_reference_builder(author_name, title, date_published, date_accessed, U
     
     citation = '(' + author_name_citation + date_published + ')\n'
     
-    return f"{author_name} *{title}* {date_published}. {video_format} {publisher} {new_URL} {date_accessed}" + '\n', citation
+    return f"{author_name} *{title}* {date_published}. \
+          {video_format} {publisher} {new_URL} {date_accessed}" + '\n', citation
