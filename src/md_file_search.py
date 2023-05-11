@@ -28,12 +28,13 @@ def search_md_for_citation_flags(md_file, citation_list):
             # the document is searched for flags relating to each citation
             for citation_index, citation in enumerate(citation_list):
                 
+                new_citation_index = citation_index + 1
                 # skip blank lines
                 if line in "\n":
                     pass
                 # search for current index flag in line
-                elif f'[{citation_index}]' in line.lower().strip() or \
-                        f'[{citation_index}' in line.lower().strip():
+                elif f'[{new_citation_index}]' in line.lower().strip() or \
+                        f'[{new_citation_index}' in line.lower().strip():
 
                     # put each flag in their own index in a list
                     line_list = line.strip().split(']')
@@ -45,12 +46,12 @@ def search_md_for_citation_flags(md_file, citation_list):
 
                         # possible cases a flag might appear after 
                         # being split, joined, and then split at spaces
-                        exp_to_search = re.search(f'\[{citation_index}', str)
-                        exp_to_search_multiple_brackets = re.search(f'\[{citation_index}\[[0-9]', str)
-                        exp_to_search_space = re.search(f'\[{citation_index} ', str)
-                        exp_to_search_comma= re.search(f'\[{citation_index},', str)
-                        exp_to_search_any_character= re.search(f'\[{citation_index}.', str)
-                        exp_to_search_newline = re.search(f'\[{citation_index}.\n', str)
+                        exp_to_search = re.search(f'\[{new_citation_index}', str)
+                        exp_to_search_multiple_brackets = re.search(f'\[{new_citation_index}\[[0-9]', str)
+                        exp_to_search_space = re.search(f'\[{new_citation_index} ', str)
+                        exp_to_search_comma= re.search(f'\[{new_citation_index},', str)
+                        exp_to_search_any_character= re.search(f'\[{new_citation_index}.', str)
+                        exp_to_search_newline = re.search(f'\[{new_citation_index}.\n', str)
 
                         if exp_to_search_comma:
                             line_list[char_index] = citation.strip() + ','
@@ -72,7 +73,7 @@ def search_md_for_citation_flags(md_file, citation_list):
                             for list_item in new_str_list:
                                 if list_item != '':
                                     list_item = '[' + list_item
-                                    if list_item in f'\[{citation_index}':
+                                    if list_item in f'\[{new_citation_index}':
                                         list_item = citation.strip()
                                 spaces_between.append(list_item)
 
