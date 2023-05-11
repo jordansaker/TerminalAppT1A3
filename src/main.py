@@ -3,12 +3,24 @@ from md_file_search import search_md_for_reference_list_flag
 import os
 import file_handling
 from colorist import green, yellow, red, white, magenta, black, cyan
+from colorist import Color, BrightColor
 
 
 # user-defined exceptions
 class EndCase(Exception):
     "To End the match case abruptly and return to the while loop."
     pass
+
+def main_menu_output():
+    print(f"\nWhat would you like to do? \n\n{Color.WHITE}Options: 'Insert references', 'Insert citations', 'New Reference', 'Search'.\n{Color.OFF} \nType {Color.MAGENTA}'\help' {Color.OFF} to print help document. Type {Color.MAGENTA}'\quit' {Color.OFF}to exit. Type {Color.RED} '\delete' {Color.OFF} to delete references list and citations")
+    module_to_run = input('\n>> ').lower()
+
+    return module_to_run
+
+def app_name():
+    print('\n')
+    print(f'***** {Color.WHITE}Harvard Referencing for Markdown {Color.OFF} *****')
+
 
 # select which modules to run
 '''
@@ -19,28 +31,15 @@ class EndCase(Exception):
 # clear the terminal
 os.system('clear' if os.name == 'posix' else 'cls')
 
-# ask user whether they want to handle a file or not
-print('\n')
-print('***** Harvard Referencing for Markdown *****')
+app_name()
 
 
 # main loop
 # Check is references.txt exists. If yes, ask user what they want to do
 if os.path.isfile('references.txt'):
-    print("\nWhat would you like to do? \n\nOptions: 'Insert references', 'Insert citations', 'New Reference', 'Search'. \nType '\help' to print help document. Type '\quit' to exit. Type '\delete' to delete references list and citations")
-    module_to_run = input('\n>> ').lower()
+    module_to_run = main_menu_output()
 
-    # make sure user understands delete
-    if module_to_run == '\delete':
-        print("\nThis will delete all the current references. Are you sure?")
-        # ask user to type Y to confirm N to cancel 
-        user_confirm = input('\nY/N:\n>> ').lower()
-        if user_confirm in 'y':
-            os.remove("references.txt")
-            os.remove("citations.txt")
-            print("\nReferences deleted successfully")
-            print("\nEnter a reference to get started\n")
-            module_to_run = 'new reference'
+    
 # if not get user to enter new reference
 else:
     print("\nEnter a reference to get started\n")
@@ -49,22 +48,35 @@ else:
 # main loop which can be exited if user types in quit
 
 while module_to_run != '\quit':
+    # make sure user understands delete
+    if module_to_run == '\delete':
+        print("\nThis will delete all the current references. Are you sure?")
+        # ask user to type Y to confirm N to cancel 
+        user_confirm = input('\nY/N:\n>> ').lower()
+        if user_confirm in 'y':
+            os.remove("references.txt")
+            os.remove("citations.txt") if os.path.exists('citations.txt') else None
+            print("\nReferences deleted successfully")
+            print("\nEnter a reference to get started\n")
+            module_to_run = 'new reference'
     try: 
         match module_to_run:
         # if handle file, ask user for file name
             case 'insert references':
                 # call the file handling function for inserting references
-                file_handling.insert_references_citations('references.txt', 'read')
+                file_name = file_handling.insert_references_citations('references.txt', 'read')
+                print(f'{BrightColor.BLUE}References inserted into {file_name} file{BrightColor.OFF}')
             case 'insert citations':
                 # call the file handling function for inserting citations
-                file_handling.insert_references_citations('citations.txt', 'read')
+                file_name = file_handling.insert_references_citations('citations.txt', 'read')
+                print(f'{BrightColor.BLUE}Citations inserted into {file_name} file{BrightColor.OFF}')
         # if not, run the reference module
             case 'new reference':
-                # clear the terminal
                 os.system('clear' if os.name == 'posix' else 'cls')
+                app_name()
 
                 temporary_reference_list = []
-                temporary_citation_list = ['']
+                temporary_citation_list = []
                 end_listing = 0
                 # run new reference function until user types add
                 while end_listing != 'add':
@@ -87,6 +99,8 @@ while module_to_run != '\quit':
                 # if user types quit in reference search
                 if not reference_number.isnumeric(): 
                     if reference_number == '\quit':
+                        file_handling.add_new_reference('references.txt', reference_list, 'w')
+                        file_handling.add_new_reference('citations.txt', citation_list, 'w')
                         raise EndCase
                 else:
                     reference_number = int(reference_number)
@@ -95,7 +109,7 @@ while module_to_run != '\quit':
 
                 while edit:
 
-                    edit_or_delete = input("Would you like to edit or delete this reference? (Type '\delete' or 'edit'. Type '\quit' to exit)\n>> ").lower()
+                    edit_or_delete = input(f"Would you like to edit or delete this reference? (Type{Color.RED} '\delete' {Color.OFF} or {Color.YELLOW} 'edit' {Color.OFF}. Type {Color.MAGENTA} '\quit' {Color.OFF} to exit)\n>> ").lower()
 
                     if edit_or_delete == '\quit':
                         break
@@ -118,8 +132,6 @@ while module_to_run != '\quit':
                         break
     except EndCase:
         pass
-    os.system('clear' if os.name == 'posix' else 'cls')
-    print('\n')
-    print('***** Harvard Referencing for Markdown *****')
-    print("\nWhat would you like to do? \n\nOptions: 'Insert references', 'Insert citations', 'New Reference', 'Search'. \nType '\help' to print help document. Type '\quit' to exit. Type '\delete' to delete references list and citations")
-    module_to_run = input('\n>> ').lower()
+    # os.system('clear' if os.name == 'posix' else 'cls')
+    app_name()
+    module_to_run = main_menu_output()
