@@ -37,7 +37,7 @@ def insert_references_citations(file_type, read_or_search):
             # get the markdown file name
             if read_or_search in 'read':
                 file_name = input(
-                    f"What is the Markdown file name? (Type {Color.RED} '\delete' {Color.OFF} to exit to main menu) \n>> ")
+                    f"What is the Markdown file name? (Type {Color.RED} '\quit' {Color.OFF} to exit to main menu) \n>> ")
                 if file_name in '\quit':
                     return None
             # open the markdown file and store in temp file
