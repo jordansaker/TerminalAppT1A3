@@ -1,6 +1,7 @@
 from file_handling import add_new_reference
 import re
 import datetime
+import calendar
 
 class IncorrectDateFormat(Exception):
     "Incorrect date format. Correct date format is dd/mm/yyyy"
@@ -28,26 +29,30 @@ def common_reference_details_inputs():
     date_published = input('Date Published (yyyy): ')
 
     date_format = None
+    # get current year
+    today = datetime.date.today()
+    current_year = today.year
     # create while loop
     while not date_format:
         try:
-            date_accessed = 'viewed ' + input('Date Accessed (dd/mm/yyyy): ')
-            day = date_accessed[7:9]
-            month = date_accessed[10:12]
-            year = date_accessed[13:]
+            date_accessed = input('Date Accessed (dd/mm/yyyy): ')
+            day = date_accessed[:2]
+            month = date_accessed[3:5]
+            year = date_accessed[6:10]
             
             # check for the correct format dd/mm/yyyy
             if day.isnumeric() and month.isnumeric() and year.isnumeric():
                 day = int(day)
-                if 0 < day <= 31:
-                    pass
+                month = int(month)
+                year = int(year)
+                if 0 < day <= 31 and 0 < month <= 12 and current_year >= year > 0:
+                    # get get month name
+                    month_name = calendar.month_name[month]
+                    new_date_accessed = 'viewed ' + f'{day} {month_name} {year}'
+                    date_format = True
                 else:
-                    print('Day exceeds 31 days in a month. Enter new day')
-            
-                if 0 < month <= 12:
-                    pass
-                else:
-                    print('Month exceeds 12 months month. Enter new month')
+                    print('Day or months exceed the 1-31 range for days and 1-12 \
+                          for months. Enter new day or month')
             else:
                 raise IncorrectDateFormat
 
@@ -71,7 +76,7 @@ def common_reference_details_inputs():
         author_name_citation += f'{mod_author_name[-1]}, '
 
     return (author_name, title, date_published, 
-            date_accessed, URL, author_name_citation)
+            new_date_accessed, URL, author_name_citation)
 
 
 # Type of Reference Functions ----------------------------------
@@ -128,6 +133,7 @@ def website_reference_builder(author_name, title, date_published,
     
     date_string =  f'{date_published}. ' if date_published else 'n.d ' 
     date_string_citation = f'{date_published}' if date_published else 'n.d' 
+
     # generate reference citation
     citation = '(' + author_name_citation + date_string_citation + ')\n'
 
@@ -142,21 +148,36 @@ def book_reference_builder(author_name, title, date_published, date_accessed,
         new_chapter_title = chapter_title + ' in'
     else:
         new_chapter_title = ''
+    if volume_number:
+        new_volume_number = 'vol. ' + volume_number
+    else:
+        new_volume_number = ''
 
+    # generate citation
     citation = '(' + author_name_citation + date_published + ')\n'
 
     return f"{author_name} {date_published}. {new_chapter_title} \
-        *{title}*, {edition}, {volume_number}, {publisher}, \
+        *{title}*, {edition}, {new_volume_number}, {publisher}, \
             {publisher_place}, {page_range}. {date_accessed} {URL}" + '\n', citation
 
 def journal_reference_builder(author_name, title, date_published,
                                 date_accessed, URL, journal_name, volume_number, issue_number,
                                   page_range, author_name_citation):
     
+    if volume_number:
+        new_volume_number = 'vol. ' + volume_number
+    else:
+        new_volume_number = ''
+    if issue_number:
+        new_issue_number = 'vol. ' + issue_number
+    else:
+        new_issue_number = ''
+    
+    # generate citation
     citation = '(' + author_name_citation + date_published + ')\n'
 
     return f"{author_name} {date_published}. '{title}', \
-          *{journal_name}*, {volume_number}, {issue_number}, {page_range}. \
+          *{journal_name}*, {new_volume_number}, {new_issue_number}, {page_range}. \
               {date_accessed}, {URL}" + '\n', citation
 
 def video_reference_builder(author_name, title, date_published, date_accessed,
@@ -166,6 +187,7 @@ def video_reference_builder(author_name, title, date_published, date_accessed,
     else:
         new_URL = ''
     
+    # generate citation
     citation = '(' + author_name_citation + date_published + ')\n'
     
     return f"{author_name} *{title}* {date_published}. \
