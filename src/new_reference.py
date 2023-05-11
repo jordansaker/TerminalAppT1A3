@@ -6,9 +6,23 @@ from reference_type import (common_reference_details_inputs,
 
 def new_reference(temporary_reference_list, temporary_citation_list):
     # ask for reference type
-    reference_type = input(
-        "\nType of refereence: (Website, Book, Journal, Video)\n Or type 'add' to add references to reference list. Type '\quit' to return to main (This won't save any references you've added)\n>> ").lower()
-    
+    reference_type = ''
+
+    while not reference_type:
+        try:
+            reference_type = input(
+        "\nType of reference: (Website, Book, Journal, Video)\n Or type 'add' to add references to reference list. Type '\quit' to return to main (This won't save any references you've added)\n>> ").lower()
+            
+            if reference_type == 'website' or reference_type == 'book' \
+                  or reference_type == 'journal' or \
+                      reference_type == 'video' or reference_type == 'add':
+                break
+            else:
+                reference_type = ''
+                raise ValueError
+        except ValueError:
+            print('Type the correct option')
+
     if reference_type == 'add':
         return (reference_type, temporary_reference_list,
                  temporary_citation_list)
