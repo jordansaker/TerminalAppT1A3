@@ -44,9 +44,13 @@ def insert_references_citations(file_type, read_or_search):
             if file_type in 'references.txt' and read_or_search in 'read':
                 temp_file = search_md_for_reference_list_flag(
                     file_name, reference_citation_list)
+                
+                return file_name
             elif file_type in 'citations.txt' and read_or_search in 'read':
                 temp_file = search_md_for_citation_flags(
                     file_name, citation_list)
+                
+                return file_name
 
     except OSError as error:
         print(f'{Color.RED}References List does not exist. Create a list by added a new reference{Color.OFF}')
