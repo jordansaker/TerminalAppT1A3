@@ -18,7 +18,9 @@ def insert_references_citations(file_type, read_or_search):
 
             # get the markdown file name
             if read_or_search in 'read':
-                file_name = input('What is the Markdown file name? \n>> ')
+                file_name = input("What is the Markdown file name? (Type '\quit' to exit to main menu) \n>> ")
+                if file_name in '\quit':
+                    return None
             # open the markdown file and store in temp file
             if file_type in 'references.txt' and read_or_search in 'read':
                 temp_file = search_md_for_reference_list_flag(file_name, reference_citation_list)
