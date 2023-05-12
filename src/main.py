@@ -60,8 +60,9 @@ if os.path.isfile('references.txt'):
 # if not get user to enter new reference
 else:
     print("\nEnter a reference to get started\n")
-    module_to_run = 'new reference'
-    if argv[1] == "-h":
+    if len(argv) == 1:
+        module_to_run = 'new reference'
+    elif argv[1] == "-h":
         module_to_run = '\help'
 
 # main loop which can be exited if user types in quit
@@ -84,11 +85,19 @@ while module_to_run != '\quit':
             case 'insert references':
                 # call the file handling function for inserting references
                 file_name = file_handling.insert_references_citations('references.txt', 'read')
-                print(f'{BrightColor.BLUE}References inserted into {file_name} file{BrightColor.OFF}')
+                if file_name != 'error':
+                    print(f'{BrightColor.BLUE}References inserted into {file_name} file{BrightColor.OFF}')
+                else:
+                    print(f'{Color.RED}Markdown file not found{Color.OFF}')
+                    os.remove(file_name)
             case 'insert citations':
                 # call the file handling function for inserting citations
                 file_name = file_handling.insert_references_citations('citations.txt', 'read')
-                print(f'{BrightColor.BLUE}Citations inserted into {file_name} file{BrightColor.OFF}')
+                if file_name != 'error':
+                    print(f'{BrightColor.BLUE}Citations inserted into {file_name} file{BrightColor.OFF}')
+                else:
+                    print(f'{Color.RED}Markdown file not found{Color.OFF}')
+                    
         # if not, run the reference module
             case 'new reference':
                 os.system('clear' if os.name == 'posix' else 'cls')
