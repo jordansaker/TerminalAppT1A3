@@ -52,6 +52,8 @@ if os.path.isfile('references.txt'):
         module_to_run = 'insert citations'
     elif argv[1] == "-nr":
         module_to_run = 'new reference'
+    elif argv[1] == "-h":
+        module_to_run = '\help'
     
 
     
