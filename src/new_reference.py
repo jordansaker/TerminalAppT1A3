@@ -47,9 +47,29 @@ def edit_reference(reference_citation_list,
                    reference_number, reference_or_citation, new_citation):
     # ask for reference type
     if reference_or_citation in 'reference':
-        reference_type = input(
-        f"\nType of refereence: {Color.WHITE}(Website, Book, Journal, Video){Color.OFF}\n Or type 'add' to add references to reference list. Type {Color.MAGENTA} '\quit' {Color.OFF} to return to main (This won't save any references you've added)\n>> ").lower()
-    
+
+        reference_type = ''
+
+        while not reference_type:
+
+            reference_type = input(
+            f"\nType of refereence: {Color.WHITE}(Website, Book, Journal, Video){Color.OFF}\n Or type 'add' to add references to reference list. Type {Color.MAGENTA} '\quit' {Color.OFF} to return to main (This won't save any references you've added)\n>> ").lower()
+        
+            try:
+                if reference_type == 'website' or reference_type == 'book' \
+                        or reference_type == 'journal' or \
+                            reference_type == 'video' \
+                                or reference_type == '\quit':
+                    break
+                else:
+                        reference_type = ''
+                        raise ValueError
+            except ValueError:
+                print('Type the correct option')
+
+        if reference_type == '\quit':
+            return [], []
+
         reference, citation = inputs_function(reference_type)
 
     if reference_or_citation in 'reference':
