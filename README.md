@@ -85,6 +85,8 @@ Since this is a low level feature, the priority of implementation isn't as high.
 
 Below are some screenshots of Trello which was used to track the implementation of the application. Most lists had a checklist with cards containing small tasks that eventually added up to completing the list.
 
+TRELLO URL: https://trello.com/b/fEerwWth/markdown-harvard-referencing
+
 ![Trello Board](docs/trello_1.png)
 ![Card in a list](docs/trello_2.png)
 ![Comments on a card](docs/trello_3.png)
