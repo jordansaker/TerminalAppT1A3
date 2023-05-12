@@ -70,10 +70,16 @@ def common_reference_details_inputs():
     # rearrange author's name to list surname first then initail
     author_name = ''
     author_name_citation = ''
+    
     for author in author_list:
         mod_author_name = author.split(' ')
         author_name += f'{mod_author_name[-1]}, {mod_author_name[0][:1]}. '
         author_name_citation += f'{mod_author_name[-1]}, '
+    
+    if len(author_list) > 3:
+        mod_author_name = author_name_citation.split(',')
+        author_name_citation = f'{mod_author_name[0]} et al., '
+
 
     return (author_name, title, date_published, 
             new_date_accessed, URL, author_name_citation)
