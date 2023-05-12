@@ -7,7 +7,7 @@ def search_md_for_reference_list_flag(md_file, reference_list):
     with open(md_file, 'r') as file:
         for index, line in enumerate(file):
             temp_file.append(line)
-            if line.lower().strip() in '[\\references]':
+            if line.lower().strip() == '[\\references]' or line.lower().strip() == '[\\references]\n':
                 line_index = index
         
     temp_file[line_index] = ''.join(reference_list) + '\n'
