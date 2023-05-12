@@ -40,7 +40,9 @@ app_name()
 # main loop
 # Check is references.txt exists. If yes, ask user what they want to do
 if os.path.isfile('references.txt'):
-    if argv[1] == "-s":
+    if len(argv) == 1:
+        module_to_run = main_menu_output()
+    elif argv[1] == "-s":
          module_to_run = 'search'
     elif argv[1] == "-ir":
         module_to_run = 'insert references'
@@ -48,8 +50,7 @@ if os.path.isfile('references.txt'):
         module_to_run = 'insert citations'
     elif argv[1] == "-nr":
         module_to_run = 'new reference'
-    elif len(argv) == 1:
-        module_to_run = main_menu_output()
+    
 
     
 # if not get user to enter new reference
@@ -93,10 +94,15 @@ while module_to_run != '\quit':
                 # run new reference function until user types add
                 while end_listing != 'add':
                     end_listing, temporary_reference_list, temporary_citation_list = new_reference(temporary_reference_list, temporary_citation_list)
+                    if end_listing == "\quit":
+                        break
                 # add the references to the references.txt and citations.txt files
                     # call the file handler function and write to file
-                file_handling.add_new_reference('references.txt', ''.join(temporary_reference_list), 'a+')
-                file_handling.add_new_reference('citations.txt', ''.join(temporary_citation_list), 'a+')
+                if end_listing == 'add':
+                    file_handling.add_new_reference('references.txt', ''.join(temporary_reference_list), 'a+')
+                    file_handling.add_new_reference('citations.txt', ''.join(temporary_citation_list), 'a+')
+                else:
+                    module_to_run = "\quit"
             case '\help':
                 # print the help documentation by calling the module function
                 any_key = ''
@@ -155,5 +161,6 @@ while module_to_run != '\quit':
     except EndCase:
         pass
     # os.system('clear' if os.name == 'posix' else 'cls')
-    app_name()
-    module_to_run = main_menu_output()
+    if module_to_run != "\quit":
+        app_name()
+        module_to_run = main_menu_output()
