@@ -1,4 +1,4 @@
-# Hardvard Referencing for Markdown
+# Harvard Referencing Generator for Markdown
 
 ### Github repository
 
