@@ -5,6 +5,7 @@
 from md_file_search import search_md_for_reference_list_flag, search_md_for_citation_flags
 from txt_file_search import reference_search
 import re
+import os
 from colorist import Color
 
 
@@ -43,10 +44,11 @@ def insert_references_citations(file_type, read_or_search):
                         f"What is the Markdown file name? {Color.CYAN}[markdown.md]{Color.OFF} (Type {Color.RED} '\quit' {Color.OFF} to exit to main menu) \n>> ")
                         if file_name in '\quit':
                             return None
-                        else:
+                        elif os.path.isfile('references.txt'):
                             break
                     except OSError:
-                        print(f'{Color.RED}Markdown file does not exist. Try again.{Color.OFF}')
+                        error = 'error'
+                        return error
             # open the markdown file and store in temp file
             if file_type in 'references.txt' and read_or_search in 'read':
                 temp_file = search_md_for_reference_list_flag(
@@ -58,8 +60,9 @@ def insert_references_citations(file_type, read_or_search):
                 
 
     except OSError:
-        print(f'{Color.RED}References List does not exist. Create a list by added a new reference{Color.OFF}')
-
+        print(f'{Color.RED}File not found{Color.OFF}')
+        error = 'error'
+        return error
     # search for references
     if file_type in 'references.txt' and read_or_search in 'search':
         reference_number = reference_search(reference_citation_list)
@@ -76,7 +79,9 @@ def insert_references_citations(file_type, read_or_search):
             
                 return file_name
             except Exception:
-                 print(f'{Color.RED}Markdown file not found{Color.OFF}')
+                error = 'error'
+                return error
+                
     else:
         pass
 
