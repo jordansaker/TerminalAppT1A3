@@ -36,10 +36,15 @@ def insert_references_citations(file_type, read_or_search):
             
             # get the markdown file name
             if read_or_search in 'read':
-                file_name = input(
-                    f"What is the Markdown file name? (Type {Color.RED} '\quit' {Color.OFF} to exit to main menu) \n>> ")
-                if file_name in '\quit':
-                    return None
+                file_found = ''
+                while not file_found:
+                    try:
+                        file_name = input(
+                        f"What is the Markdown file name? {Color.CYAN}[markdown.md]{Color.OFF} (Type {Color.RED} '\quit' {Color.OFF} to exit to main menu) \n>> ")
+                        if file_name in '\quit':
+                            return None
+                    except OSError:
+                        print(f'{Color.RED}Markdown file does not exist. Try again.{Color.OFF}')
             # open the markdown file and store in temp file
             if file_type in 'references.txt' and read_or_search in 'read':
                 temp_file = search_md_for_reference_list_flag(
@@ -54,8 +59,6 @@ def insert_references_citations(file_type, read_or_search):
 
     except OSError as error:
         print(f'{Color.RED}References List does not exist. Create a list by added a new reference{Color.OFF}')
-        print(type(error))
-        return type(error)
 
     # search for references
     if file_type in 'references.txt' and read_or_search in 'search':
@@ -81,5 +84,3 @@ def add_new_reference(filename, input_text, read_or_write):
                 print('Reference fields are empty. Try again.')
     except OSError as error:
         print(f'{Color.RED}File name not found: %s{Color.OFF}' % filename )
-        print(type(error))
-        return type(error)
