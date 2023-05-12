@@ -43,6 +43,8 @@ def insert_references_citations(file_type, read_or_search):
                         f"What is the Markdown file name? {Color.CYAN}[markdown.md]{Color.OFF} (Type {Color.RED} '\quit' {Color.OFF} to exit to main menu) \n>> ")
                         if file_name in '\quit':
                             return None
+                        else:
+                            break
                     except OSError:
                         print(f'{Color.RED}Markdown file does not exist. Try again.{Color.OFF}')
             # open the markdown file and store in temp file
@@ -50,14 +52,12 @@ def insert_references_citations(file_type, read_or_search):
                 temp_file = search_md_for_reference_list_flag(
                     file_name, reference_citation_list)
                 
-                return file_name
             elif file_type in 'citations.txt' and read_or_search in 'read':
                 temp_file = search_md_for_citation_flags(
                     file_name, citation_list)
                 
-                return file_name
 
-    except OSError as error:
+    except OSError:
         print(f'{Color.RED}References List does not exist. Create a list by added a new reference{Color.OFF}')
 
     # search for references
@@ -68,8 +68,15 @@ def insert_references_citations(file_type, read_or_search):
         return citation_list
     # re-write markdown with temp file
     if read_or_search in 'read':
-        with open(file_name, 'w') as file:
-            file.writelines(temp_file)
+        file_not_found = ''
+        while not file_not_found:
+            try:
+                with open(file_name, 'w') as file:
+                    file.writelines(temp_file)
+            
+                return file_name
+            except Exception:
+                 print(f'{Color.RED}Markdown file not found{Color.OFF}')
     else:
         pass
 
@@ -82,5 +89,6 @@ def add_new_reference(filename, input_text, read_or_write):
                     file.write(line)
             else:
                 print('Reference fields are empty. Try again.')
-    except OSError as error:
+        return f"References added"
+    except OSError:
         print(f'{Color.RED}File name not found: %s{Color.OFF}' % filename )
