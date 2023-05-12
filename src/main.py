@@ -6,6 +6,7 @@ import file_handling
 from colorist import green, yellow, red, white, magenta, black, cyan
 from colorist import Color, BrightColor
 from help import help_document
+from sys import argv
 
 
 # user-defined exceptions
@@ -39,7 +40,16 @@ app_name()
 # main loop
 # Check is references.txt exists. If yes, ask user what they want to do
 if os.path.isfile('references.txt'):
-    module_to_run = main_menu_output()
+    if argv[1] == "-s":
+         module_to_run = 'search'
+    elif argv[1] == "-ir":
+        module_to_run = 'insert references'
+    elif argv[1] == "-ic":
+        module_to_run = 'insert citations'
+    elif argv[1] == "-nr":
+        module_to_run = 'new reference'
+    elif len(argv) == 1:
+        module_to_run = main_menu_output()
 
     
 # if not get user to enter new reference
