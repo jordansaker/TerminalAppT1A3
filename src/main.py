@@ -19,7 +19,7 @@ def main_menu_output():
 
 def app_name():
     print('\n')
-    print(f'***** {Color.WHITE}Harvard Referencing for Markdown {Color.OFF} *****')
+    print(f'***** {Color.WHITE}Markdown Harvard Reference Generator {Color.OFF} *****')
 
 
 # select which modules to run
