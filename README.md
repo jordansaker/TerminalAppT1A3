@@ -10,6 +10,8 @@ URL:
 
 ### Code Styling Conventions
 
+PEP8 styling guide was followed while writing the code. See guide [here](https://peps.python.org/pep-0008/#introduction).
+
 ### Features of the Application
 
 - structures the inputted strings into a Harvard-style referencing format depending on refernece type
@@ -132,13 +134,50 @@ The application environment should now be installed. To run the application ente
 
 ##### Using the bash script arguments
 
-The application can be used
+The application can be run with bash script arguments. The general bash command is:
+
+``` ./harvref.sh```
+
+which runs the main.py module. The command can then have an argument as follows:
+
+``` -nr ```  add a new reference
+``` -ir ```  insert references into markdown file
+``` -ic ```  insert citations into markdown file
+``` -s ```   search for a reference
+``` -h ```   print help document
 
 ##### Adding New References
 
+To add a new reference
+
 ##### Inserting References and Citations into a Markdown File
+
+###### References
+The application searches for flags in a markdown and then inserts the relevant content. To insert the references flag, select the desired spot in the markdown document and enter the following flag:
+
+[\References]
+
+**Note:** this flag is not case sensitive but requires two (2) backslashes to flag the search expression. The search algorithm only inserts the reference list to the last flag found in the document. So if there are multiple flags only the last one will have the inserted references.
+
+###### Citations
+For citations, flags can be placed in the document and the search algorithm will loop through each line and insert the corresponding citation. For example, if a reference list contained 10 references, if the user wanted to insert citation for reference 8 here, it should be done like so: [1].
+
+**Note:** there should be a space preceeding or following the citation flag or the entire word joined in front of the flag will be replaced along with the flag. 
+
+i.e. 'this[1]' and '[1]this' will be replaced with (In-text citation)
+
+However this '[1],' or '[1].' or '[1][2][3][4]' should not be replaced with (In-text citation).
 
 ##### Searching, Editing, Deleting Reference
 
+In the search interface, you will see an entire list of references printed above the command line. You can search for a reference by typing in the command line a reference number i.e. to find reference number 10, type **10** into the command line. To search for a reference by author's lastname, type in the command line the author's last name. This is not case sensitive.
+
+Both methods will return a result. The first will only return one result however for the second, it can return multiple results.
+
+Once a result is returned, a reference can be selected using the reference number.
+
+Once the reference is selected, the user will be prompted on what they can do. The entire reference can be re-written or it can be deleted permenantly from the list.
+
 ##### Deleting the the entire Reference and Citation Lists
 
+In the main menu interface, you can type **_'\delete'_** into the command line and it will ask you whether you want delete the references. **Note:** This will delete the entire reference list permenantly along with the citations list.
