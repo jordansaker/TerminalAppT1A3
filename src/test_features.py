@@ -1,5 +1,4 @@
 import pytest
-from io import StringIO
 import file_handling
 import md_file_search
 import reference_type
