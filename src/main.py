@@ -1,9 +1,11 @@
 from new_reference import new_reference, edit_reference
 from md_file_search import search_md_for_reference_list_flag
 import os
+import re
 import file_handling
 from colorist import green, yellow, red, white, magenta, black, cyan
 from colorist import Color, BrightColor
+from help import help_document
 
 
 # user-defined exceptions
@@ -87,7 +89,13 @@ while module_to_run != '\quit':
                 file_handling.add_new_reference('citations.txt', ''.join(temporary_citation_list), 'a+')
             case '\help':
                 # print the help documentation by calling the module function
-                pass
+                any_key = ''
+                show = 0
+                while any_key != '\quit':
+                    if show == 0:  
+                        help_document()
+                        show += 1
+                    any_key = input(f"Type {Color.MAGENTA}'\quit'{Color.OFF} to exit help >> ").lower()
             case 'search':
                 # clear the terminal
                 os.system('clear' if os.name == 'posix' else 'cls')
