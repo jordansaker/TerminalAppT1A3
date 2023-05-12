@@ -5,6 +5,7 @@ from reference_type import (common_reference_details_inputs,
                                             video_reference_details_inputs, video_reference_builder)
 from colorist import Color
 
+
 def new_reference(temporary_reference_list, temporary_citation_list):
     # ask for reference type
     reference_type = ''

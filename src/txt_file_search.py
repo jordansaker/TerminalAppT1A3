@@ -1,6 +1,7 @@
 import re
 from colorist import Color
 
+
 def reference_search(references_list):
     query_value = ''
     while query_value != '\quit':

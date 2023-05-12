@@ -80,6 +80,7 @@ def insert_references_citations(file_type, read_or_search):
     else:
         pass
 
+
 def add_new_reference(filename, input_text, read_or_write):
     try:
         with open(filename, read_or_write) as file:

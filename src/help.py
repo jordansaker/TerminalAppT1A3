@@ -1,5 +1,6 @@
 from colorist import Color
 
+
 def help_document():
     print( f'''
 

@@ -18,6 +18,7 @@ def test_No_Arguments():
 def test_video_reference_builder():
     assert reference_type.video_reference_builder('author_name', 'title', '', 'date_accessed', '', 'publisher', 'video_format', 'author_name_citation')
 
+
 def test_website_reference_builder():
     assert reference_type.website_reference_builder('author_name', 'title', 'date_published', '', 'website_name', 'URL', 'author_name_citation')
 

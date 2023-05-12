@@ -14,11 +14,13 @@ class EndCase(Exception):
     "To End the match case abruptly and return to the while loop."
     pass
 
+
 def main_menu_output():
     print(f"\nWhat would you like to do? \n\n{Color.WHITE}Options: 'Insert references', 'Insert citations', 'New Reference', 'Search'.\n{Color.OFF} \nType {Color.MAGENTA}'\help' {Color.OFF} to print help document. Type {Color.MAGENTA}'\quit' {Color.OFF}to exit. Type {Color.RED} '\delete' {Color.OFF} to delete references list and citations")
     module_to_run = input('\n>> ').lower()
 
     return module_to_run
+
 
 def app_name():
     print('\n')

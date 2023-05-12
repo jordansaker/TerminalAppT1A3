@@ -3,9 +3,11 @@ import re
 import datetime
 import calendar
 
+
 class IncorrectDateFormat(Exception):
     "Incorrect date format. Correct date format is dd/mm/yyyy"
     pass
+
 
 def common_reference_details_inputs():
     multi_author = input('Multiple Authors? Y/N ').lower()
@@ -101,6 +103,7 @@ def website_reference_details_inputs():
 
     return website_name
 
+
 def book_reference_details_inputs():
     input_strings = ['Chapter Title: ', 'Edition: ', 'Volume Number: ',
                      'Publisher: ', 'Publisher Place: ', 'Page Range: ']
@@ -109,6 +112,7 @@ def book_reference_details_inputs():
 
     return (reference_details[0], reference_details[1], reference_details[2], 
                 reference_details[3], reference_details[4], reference_details[5])
+
 
 def journal_reference_details_inputs():
     input_strings = ['Journal Name: ', 'Volume Number: ',
@@ -147,6 +151,7 @@ def website_reference_builder(author_name, title, date_published,
                 f'*{title}*. {website_name} [online] Available at: {URL}, {date_accessed}\n',
                     citation)
 
+
 def book_reference_builder(author_name, title, date_published, date_accessed,
                             URL, chapter_title, edition, volume_number,
                               publisher, publisher_place, page_range, author_name_citation):
@@ -169,6 +174,7 @@ def book_reference_builder(author_name, title, date_published, date_accessed,
     return f"{author_name} {date_published}. {new_chapter_title} \
         *{title}*, {edition}, {new_volume_number}, {publisher}, \
             {publisher_place}, {new_page_range}. {date_accessed} {URL}" + '\n', citation
+
 
 def journal_reference_builder(author_name, title, date_published,
                                 date_accessed, URL, journal_name, volume_number, issue_number,
@@ -193,6 +199,7 @@ def journal_reference_builder(author_name, title, date_published,
     return f"{author_name} {date_published}. '{title}', \
           *{journal_name}*, {new_volume_number}, {new_issue_number}, {new_page_range}. \
               {date_accessed}, {URL}" + '\n', citation
+
 
 def video_reference_builder(author_name, title, date_published, date_accessed,
                              URL, publisher, video_format, author_name_citation):

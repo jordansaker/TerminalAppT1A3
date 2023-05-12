@@ -1,5 +1,6 @@
 import re
 
+
 def search_md_for_reference_list_flag(md_file, reference_list):
     line_index = 0
     temp_file = []
@@ -12,6 +13,7 @@ def search_md_for_reference_list_flag(md_file, reference_list):
     temp_file[line_index] = ''.join(reference_list) + '\n'
 
     return temp_file
+
 
 def search_md_for_citation_flags(md_file, citation_list):
     line_index = 0
