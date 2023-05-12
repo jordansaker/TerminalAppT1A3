@@ -125,11 +125,15 @@ while module_to_run != '\quit':
                     else:
                         print(f'\nEditing reference {reference_number}')        
                         updated_reference_list, new_generated_citation = edit_reference(reference_list, reference_number, 'reference','')
-                        updated_citation_list = edit_reference(citation_list, reference_number, 'citation', new_generated_citation)
 
-                        file_handling.add_new_reference('references.txt', updated_reference_list, 'w')
-                        file_handling.add_new_reference('citations.txt', updated_citation_list, 'w')
-                        break
+                        if not updated_reference_list:
+                            break
+                        else:
+                            updated_citation_list = edit_reference(citation_list, reference_number, 'citation', new_generated_citation)
+
+                            file_handling.add_new_reference('references.txt', updated_reference_list, 'w')
+                            file_handling.add_new_reference('citations.txt', updated_citation_list, 'w')
+                            break
     except EndCase:
         pass
     # os.system('clear' if os.name == 'posix' else 'cls')
