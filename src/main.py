@@ -61,6 +61,8 @@ if os.path.isfile('references.txt'):
 else:
     print("\nEnter a reference to get started\n")
     module_to_run = 'new reference'
+    if argv[1] == "-h":
+        module_to_run = '\help'
 
 # main loop which can be exited if user types in quit
 
