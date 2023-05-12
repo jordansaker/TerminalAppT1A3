@@ -24,12 +24,13 @@ def new_reference(temporary_reference_list, temporary_citation_list):
                 raise ValueError
         except ValueError:
             print('Type the correct option')
+        except KeyboardInterrupt:
+            print('Goodbye')
 
     if reference_type == 'add':
         return (reference_type, temporary_reference_list,
                  temporary_citation_list)
     elif reference_type == '\quit':
-        reference_type = 'add'
         return reference_type, [], []
      
     reference, citation = inputs_function(reference_type)
