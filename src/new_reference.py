@@ -27,6 +27,8 @@ def new_reference(temporary_reference_list, temporary_citation_list):
             print('Type the correct option')
         except KeyboardInterrupt:
             print('Goodbye')
+            reference_type = '\quit'
+            return reference_type, [], []
 
     if reference_type == 'add':
         return (reference_type, temporary_reference_list,
