@@ -89,7 +89,6 @@ while module_to_run != '\quit':
                     print(f'{BrightColor.BLUE}References inserted into {file_name} file{BrightColor.OFF}')
                 else:
                     print(f'{Color.RED}Markdown file not found{Color.OFF}')
-                    os.remove(file_name)
             case 'insert citations':
                 # call the file handling function for inserting citations
                 file_name = file_handling.insert_references_citations('citations.txt', 'read')

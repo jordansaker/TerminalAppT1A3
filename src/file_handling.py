@@ -71,16 +71,19 @@ def insert_references_citations(file_type, read_or_search):
         return citation_list
     # re-write markdown with temp file
     if read_or_search in 'read':
-        file_not_found = ''
-        while not file_not_found:
-            try:
-                with open(file_name, 'w') as file:
-                    file.writelines(temp_file)
+
+        add_new_reference(file_name, temp_file, 'w')
+
+        # file_not_found = ''
+        # while not file_not_found:
+        #     try:
+        #         with open(file_name, 'w') as file:
+        #             file.writelines(temp_file)
             
-                return file_name
-            except Exception:
-                error = 'error'
-                return error
+        #         return file_name
+        #     except Exception:
+        #         error = 'error'
+        #         return error
 
 
 def add_new_reference(filename, input_text, read_or_write):
@@ -94,4 +97,6 @@ def add_new_reference(filename, input_text, read_or_write):
                 print('Reference fields are empty. Try again.')
         return f"References added"
     except OSError:
-        print(f'{Color.RED}File name not found: %s{Color.OFF}' % filename )
+        print(f'{Color.RED}File name not found {Color.OFF}' )
+        error = 'error'
+        return error
