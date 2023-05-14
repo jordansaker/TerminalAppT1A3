@@ -52,6 +52,9 @@ if os.path.isfile('references.txt'):
     if len(argv) == 1:
         error_bash_prompt()
         module_to_run = '\quit'
+    elif argv[1] == "-m":
+         module_to_run = ''
+         os.system('clear' if os.name == 'posix' else 'cls')
     elif argv[1] == "-s":
          module_to_run = 'search'
     elif argv[1] == "-ir":
