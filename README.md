@@ -6,7 +6,7 @@ URL: https://github.com/jordansaker/TerminalAppT1A3
 
 ### Youtube link
 
-URL: 
+URL: https://youtu.be/kMdZRdrsixY
 
 ### Code Styling Conventions
 
@@ -131,6 +131,8 @@ The source file should contain a **requirements.txt** file, if it does not, plac
 The application environment should now be installed. To run the application enter the following command in the terminal:
 
 ``` python3 main.py ```
+
+**Note**: If you want to run the application without using the **.sh** shell, the venv must be activated before running ```python3 main.py```
 
 #### How to use the application
 
