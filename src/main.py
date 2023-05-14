@@ -1,13 +1,10 @@
 from new_reference import new_reference, edit_reference
 from md_file_search import search_md_for_reference_list_flag
 import os
-import re
 import file_handling
-from colorist import green, yellow, red, white, magenta, black, cyan
 from colorist import Color, BrightColor
 from help import help_document
 from sys import argv
-
 
 # user-defined exceptions
 class EndCase(Exception):
@@ -38,12 +35,23 @@ os.system('clear' if os.name == 'posix' else 'cls')
 
 app_name()
 
+def error_bash_prompt():
+    bash_help = print('''Enter an argument:
+        -m      run main module
+        -ir     insert reference
+        -ic     insert citations
+        -nr     new reference
+        -h      help
+        
+        ''')
+    return bash_help
 
 # main loop
 # Check is references.txt exists. If yes, ask user what they want to do
 if os.path.isfile('references.txt'):
     if len(argv) == 1:
-        module_to_run = main_menu_output()
+        error_bash_prompt()
+        module_to_run = '\quit'
     elif argv[1] == "-s":
          module_to_run = 'search'
     elif argv[1] == "-ir":
@@ -59,11 +67,17 @@ if os.path.isfile('references.txt'):
     
 # if not get user to enter new reference
 else:
-    print("\nEnter a reference to get started\n")
     if len(argv) == 1:
-        module_to_run = 'new reference'
+        error_bash_prompt()
+        module_to_run = '\quit'
     elif argv[1] == "-h":
         module_to_run = '\help'
+    elif argv[1] == "-ic" or argv[1] == "-ir" or argv[1] == "-s" or argv[1] == "-m":
+        print('No references exist. Create a new reference with the -nr argument')
+        module_to_run = '\quit'
+    elif argv[1] == "-nr":
+        print("\nEnter a reference to get started\n")
+        module_to_run = 'new reference'
 
 # main loop which can be exited if user types in quit
 
