@@ -17,7 +17,7 @@ def insert_references_citations(file_type, read_or_search):
             for index, line in enumerate(file):
                 if file_type in 'references.txt':
                     
-                    exp_to_search = re.search('^[0-9].', line)
+                    exp_to_search = re.search('^[0-9]', line)
 
                     if exp_to_search:
                         list_line = line.split(' ')
