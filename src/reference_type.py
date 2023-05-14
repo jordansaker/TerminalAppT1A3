@@ -1,5 +1,3 @@
-from file_handling import add_new_reference
-import re
 import datetime
 import calendar
 
